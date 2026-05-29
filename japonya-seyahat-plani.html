@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japonya Tatil Planı 2025</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #f5f5f0;
+    --card: #ffffff;
+    --must: #1a6fd4;
+    --must-glow: rgba(26,111,212,0.08);
+    --rez: #0f9e6a;
+    --rez-glow: rgba(15,158,106,0.08);
+    --normal: #1a1a2e;
+    --muted: #888899;
+    --tip: #7c4dbd;
+    --tip-bg: rgba(124,77,189,0.07);
+    --osaka: #d4611a;
+    --kyoto: #c0392b;
+    --tokyo: #4a1fa8;
+    --border: #e8e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--normal);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 0 0 60px 0;
+  }
+
+  .hero {
+    background: linear-gradient(160deg, #1a1a2e 0%, #2d2d4e 100%);
+    padding: 44px 20px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '🗾';
+    position: absolute;
+    font-size: 180px;
+    opacity: 0.05;
+    top: -20px; right: -10px;
+  }
+  .hero-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+  .hero-dates { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 18px; }
+  .hero-people {
+    display: inline-flex; gap: 8px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 6px 16px;
+    font-size: 12px; color: rgba(255,255,255,0.55);
+  }
+
+  .legend {
+    display: flex; gap: 18px; justify-content: center;
+    padding: 14px 20px; border-bottom: 1px solid var(--border);
+    flex-wrap: wrap; background: #fff;
+  }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--muted); }
+  .legend-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .legend-dot.must { background: var(--must); }
+  .legend-dot.rez { background: var(--rez); }
+  .legend-dot.tip { background: var(--tip); }
+  .legend-dot.normal { background: #ccc; }
+
+  .region { max-width: 500px; margin: 0 auto; padding: 0 14px; }
+
+  .region-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 24px 0 10px;
+    position: sticky; top: 0; background: var(--bg); z-index: 10;
+  }
+  .region-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+  .region-title { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
+  .region-line { flex: 1; height: 1px; background: var(--border); }
+  .osaka-color { background: var(--osaka); }
+  .kyoto-color { background: var(--kyoto); }
+  .tokyo-color { background: var(--tokyo); }
+  .osaka-text { color: var(--osaka); }
+  .kyoto-text { color: var(--kyoto); }
+  .tokyo-text { color: var(--tokyo); }
+
+  .day-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .day-header {
+    display: flex; align-items: center; gap: 11px;
+    padding: 13px 15px; cursor: pointer; user-select: none;
+    border-bottom: 1px solid transparent; transition: border-color 0.2s;
+  }
+  .day-card.open .day-header { border-bottom-color: var(--border); }
+  .day-num {
+    width: 34px; height: 34px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+  .osaka-num { background: rgba(212,97,26,0.1); color: var(--osaka); }
+  .kyoto-num { background: rgba(192,57,43,0.1); color: var(--kyoto); }
+  .tokyo-num { background: rgba(74,31,168,0.1); color: var(--tokyo); }
+  .day-info { flex: 1; }
+  .day-title { font-size: 14px; font-weight: 600; color: var(--normal); }
+  .day-date { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .day-toggle { color: var(--muted); font-size: 16px; transition: transform 0.3s; }
+  .day-card.open .day-toggle { transform: rotate(180deg); }
+
+  .day-body { display: none; }
+  .day-card.open .day-body { display: block; }
+
+  .item {
+    display: flex; align-items: flex-start; gap: 11px;
+    padding: 10px 15px; border-bottom: 1px solid var(--border);
+    transition: background 0.12s; cursor: pointer;
+  }
+  .item:last-child { border-bottom: none; }
+  .item:active { background: #fafafa; }
+
+  .item-time {
+    font-size: 10px; color: var(--muted);
+    min-width: 36px; padding-top: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .item-check {
+    width: 19px; height: 19px; border-radius: 5px;
+    border: 2px solid #ddd; flex-shrink: 0; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; margin-top: 2px;
+  }
+  .item-check.checked { background: var(--rez); border-color: var(--rez); }
+  .item-check.checked::after { content: '✓'; font-size: 11px; color: #fff; font-weight: 700; }
+
+  .item-content { flex: 1; }
+  .item-name { font-size: 13.5px; line-height: 1.4; transition: opacity 0.2s; }
+  .item.done .item-name { text-decoration: line-through; opacity: 0.3; }
+
+  .item-name.must { color: var(--must); font-weight: 600; }
+  .item-name.rez-item { color: var(--rez); font-weight: 600; }
+  .item-name.normal { color: var(--normal); }
+
+  .rez-badge {
+    display: inline-block;
+    background: var(--rez-glow); border: 1px solid rgba(15,158,106,0.25);
+    color: var(--rez); font-size: 8px; font-weight: 700; letter-spacing: 1px;
+    padding: 2px 5px; border-radius: 4px; margin-left: 6px; vertical-align: middle;
+  }
+  .must-badge {
+    display: inline-block;
+    background: var(--must-glow); border: 1px solid rgba(26,111,212,0.2);
+    color: var(--must); font-size: 8px; font-weight: 700; letter-spacing: 1px;
+    padding: 2px 5px; border-radius: 4px; margin-left: 6px; vertical-align: middle;
+  }
+  .optional-badge {
+    display: inline-block;
+    background: #f0f0f5; border: 1px solid #ddd;
+    color: var(--muted); font-size: 8px; font-weight: 600;
+    padding: 2px 5px; border-radius: 4px; margin-left: 6px; vertical-align: middle;
+  }
+  .item-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  /* TIP ROW */
+  .tip-row {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 9px 15px; border-bottom: 1px solid var(--border);
+    background: var(--tip-bg);
+  }
+  .tip-row:last-child { border-bottom: none; }
+  .tip-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .tip-text { font-size: 12px; color: var(--tip); line-height: 1.45; }
+
+  /* TIP SECTION HEADER */
+  .tips-section {
+    border-top: 1px dashed rgba(124,77,189,0.2);
+    background: var(--tip-bg);
+  }
+  .tips-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--tip);
+    padding: 7px 15px 4px;
+    opacity: 0.7;
+  }
+
+  .hotel-strip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 15px;
+    background: #f8f8fc;
+    border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--muted);
+  }
+  .hotel-strip span { color: var(--normal); font-weight: 500; }
+
+  .stats {
+    max-width: 500px; margin: 0 auto 20px;
+    padding: 16px 14px 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px;
+  }
+  .stat-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; padding: 13px 10px; text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--normal); }
+  .stat-label { font-size: 9px; color: var(--muted); margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-jp">にほん旅行プラン</div>
+  <h1>🇯🇵 Japonya Tatil Planı</h1>
+  <div class="hero-dates">21 Haziran – 3 Temmuz 2025</div>
+  <div class="hero-people">👥 4 Kişi &nbsp;·&nbsp; 🏨 3 Otel &nbsp;·&nbsp; 📍 Osaka · Kyoto · Tokyo</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot must"></div> Olmazsa Olmaz</div>
+  <div class="legend-item"><div class="legend-dot rez"></div> Rezervasyon Gerekli</div>
+  <div class="legend-item"><div class="legend-dot tip"></div> Öneri / Uyarı</div>
+  <div class="legend-item"><div class="legend-dot normal"></div> Normal</div>
+</div>
+
+<div class="stats">
+  <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Gün</div></div>
+  <div class="stat-card"><div class="stat-num" style="color:var(--must)">17</div><div class="stat-label">Olmazsa Olmaz</div></div>
+  <div class="stat-card"><div class="stat-num" style="color:var(--rez)">9</div><div class="stat-label">Rezervasyon</div></div>
+</div>
+
+<!-- ═══ OSAKA ═══ -->
+<div class="region">
+  <div class="region-header">
+    <div class="region-dot osaka-color"></div>
+    <div class="region-title osaka-text">Osaka — 3 Gece</div>
+    <div class="region-line"></div>
+  </div>
+
+  <!-- G1 -->
+  <div class="day-card open" id="day1">
+    <div class="day-header" onclick="toggleDay('day1')">
+      <div class="day-num osaka-num">G1</div>
+      <div class="day-info"><div class="day-title">Varış & Dotonbori</div><div class="day-date">21 Haziran, Cumartesi</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Akşam</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Dotonbori Yürüyüşü <span class="must-badge">OLMAZ OLMAZ</span></div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time"></div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Wanaka Takoyaki <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Osaka'nın simgesi — ilk ısırıkta dikkatli, çok sıcak olur!</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time"></div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Rikuro 1956 Japan Cheesecake</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time"></div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Seven Eleven — Atıştırmalık & İçecek</div><div class="item-sub">Onigiri, matcha latte, melon pan mutlaka dene</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">🧳</div><div class="tip-text">Uzun yolculuk sonrası ilk gece hafif tut — yarın Nara için erken kalkman gerekiyor.</div></div>
+        <div class="tip-row"><div class="tip-icon">💴</div><div class="tip-text">Havalimanında veya otele yakın bir ATM'den nakit çek. Japonya hâlâ nakit ağırlıklı bir ülke.</div></div>
+        <div class="tip-row"><div class="tip-icon">📱</div><div class="tip-text">Otele gelince WiFi şifresini al ve Google Maps'te Nara güzergahını offline indir.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>Hotel Nikko Osaka</span></div>
+    </div>
+  </div>
+
+  <!-- G2 -->
+  <div class="day-card" id="day2">
+    <div class="day-header" onclick="toggleDay('day2')">
+      <div class="day-num osaka-num">G2</div>
+      <div class="day-info"><div class="day-title">Nara Günübirlik</div><div class="day-date">22 Haziran, Pazar</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">08:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Kintetsu Hattı — Nara'ya Gidiş</div><div class="item-sub">~45 dk, Namba veya Osaka-Uehonmachi istasyonundan</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">09:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Nara Park <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Geyiklere verilecek shika senbei (geyik bisküvisi) parkın girişinde satılıyor</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">10:45</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Kasuga Taisha <span class="must-badge">OLMAZ OLMAZ</span></div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">12:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Öğle Yemeği — Udon (Nara)</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">13:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Manyo Garden <span class="optional-badge">OPSİYONEL</span></div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">15:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Osaka'ya Dönüş</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Akşam</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Akşam Yemeği</div><div class="item-sub">Ichiran Dotonbori / Tempura Nakiro / Shogun Burger</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Gece</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Don Quijote Alışveriş</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">🦌</div><div class="tip-text">Geyikler sevimli ama çantana ve yiyeceğine saldırabilir! Yiyecekleri görünür yerde tutma, küçük çocuklar dikkatli olsun.</div></div>
+        <div class="tip-row"><div class="tip-icon">👟</div><div class="tip-text">Nara Park çok yürüyüş gerektiriyor, rahat ayakkabı şart. Pazar günü kalabalık olabilir, sabah erken iyi karar.</div></div>
+        <div class="tip-row"><div class="tip-icon">🍜</div><div class="tip-text">Ichiran'da her kişi ayrı küçük bölmede yiyor — ilginç bir deneyim ama 4 kişi yan yana oturamayabilir.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>Hotel Nikko Osaka</span></div>
+    </div>
+  </div>
+
+  <!-- G3 -->
+  <div class="day-card" id="day3">
+    <div class="day-header" onclick="toggleDay('day3')">
+      <div class="day-num osaka-num">G3</div>
+      <div class="day-info"><div class="day-title">Osaka Tam Gün</div><div class="day-date">23 Haziran, Pazartesi</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">08:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Kahvaltı — Dekasan / Seven Eleven</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">09:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Osaka Castle <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">İçine girmek için ayrıca bilet (600 ¥), dışarısı ücretsiz ve çok güzel</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">11:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Shitennoji Temple</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">13:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Kuromon Market <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Öğle yemeği + sokak yemekleri — taze deniz ürünü, wagyu dilimi, meyve</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">14:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Alışveriş</div><div class="item-sub">ABC Mart · Donki · Cosme Store · Gap Osaka</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">17:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Tatlı Molası</div><div class="item-sub">Toichi Fluffy Pancake / Grenier Patisserie</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">19:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name rez-item">Wagyu Akşam Yemeği <span class="rez-badge">REZ!!</span></div><div class="item-sub">Kobe Beef Wanomiya / Maido Wagyu Yakiniku</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">22:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Son Dotonbori Yürüyüşü 🌙</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">🥩</div><div class="tip-text">Wagyu için şimdiden rezervasyon al. Maido Yakiniku kendin pişir tarzı olduğu için 4 kişilik grup için çok daha eğlenceli olabilir.</div></div>
+        <div class="tip-row"><div class="tip-icon">🛍️</div><div class="tip-text">Cosme Store ve Donki'de fiyatlar çok uygun — kozmetik ve skincare ürünleri için Türkiye'ye kıyasla büyük fark var.</div></div>
+        <div class="tip-row"><div class="tip-icon">🍰</div><div class="tip-text">Toichi fluffy pancake için 17:00'de kuyruğa girmeye çalış, pişme süresi uzun olduğu için bekleme olabiliyor.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>Hotel Nikko Osaka</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ KYOTO ═══ -->
+<div class="region">
+  <div class="region-header">
+    <div class="region-dot kyoto-color"></div>
+    <div class="region-title kyoto-text">Kyoto — 4 Gece</div>
+    <div class="region-line"></div>
+  </div>
+
+  <!-- G4 -->
+  <div class="day-card" id="day4">
+    <div class="day-header" onclick="toggleDay('day4')">
+      <div class="day-num kyoto-num">G4</div>
+      <div class="day-info"><div class="day-title">Osaka→Kyoto Geçiş & Gion</div><div class="day-date">24 Haziran, Salı</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Sabah</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Valiz Transferi — Ta-Q-Bin veya Otele Bırak</div><div class="item-sub">Namba/Umeda'dan The Gate Hotel'e göndermek en pratik seçenek</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">09:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Kiyomizudera <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Ahşap terası ve vadi manzarası — Kyoto'nun en ikonik noktası</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">10:45</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Sannenzaka & Ninenzaka Sokakları</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">12:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Yasaka Shrine</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">14:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name rez-item">Orizuru — Gion Çay Seremonisi <span class="rez-badge">REZ!!</span></div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">16:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Gion Tsujiiri — Matcha Tatlı</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">17:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Hanamikoji Sokağı</div><div class="item-sub">Akşam gezmek daha güzel — maiko görmek şans işi ama bu saatte ihtimal artar</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Akşam</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name rez-item">Akşam Yemeği <span class="rez-badge">REZ!!</span></div><div class="item-sub">Gion Karyo (Kaiseki) / Omem Kodaiji (Udon) / Kichi Kichi (Omurice)</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">🧳</div><div class="tip-text">Ta-Q-Bin ile valiz göndermek için sabah 10:00'a kadar convenience store'a teslim etmen gerekiyor. Bir gün önce akşam ayarla.</div></div>
+        <div class="tip-row"><div class="tip-icon">👘</div><div class="tip-text">Kiyomizudera çıkışında kimono kiralama dükkanları var. Eşin Sannenzaka'da kimono ile yürümek isteyebilir — yaklaşık 2.000–3.000 ¥.</div></div>
+        <div class="tip-row"><div class="tip-icon">🍽️</div><div class="tip-text">Kichi Kichi Omurice şefin tabloda omurice yapmasını izlemek çok keyifli, kayınvaliden çok beğenebilir. Rezervasyonu erkenden al.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>The Gate Hotel by Hulic</span></div>
+    </div>
+  </div>
+
+  <!-- G5 -->
+  <div class="day-card" id="day5">
+    <div class="day-header" onclick="toggleDay('day5')">
+      <div class="day-num kyoto-num">G5</div>
+      <div class="day-info"><div class="day-title">Fushimi & Tapınaklar</div><div class="day-date">25 Haziran, Çarşamba</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">08:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Fushimi Inari Taisha <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Sabah erken — kalabalık olmadan. Tüm yolu çıkmanıza gerek yok, yarısı yeterli</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">11:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Fushimi Sake Bölgesi</div><div class="item-sub">Gekkeikan Okura Sake Museum — giriş ücretine bedava sake tadımı dahil</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">13:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Menya Inoichi — Ramen</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">14:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Sanjusangendo Temple</div><div class="item-sub">1001 Kannon heykeli — kayınvalideniz ve kayınpederiniz için çok etkileyici olacak</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">16:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Kyoto Station — Teras Manzarası</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">18:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name rez-item">Okutan Nanzenji — Yudofu <span class="rez-badge">REZ!!</span></div><div class="item-sub">300+ yıllık geleneksel restoran, bahçe manzarası eşsiz</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">⛩️</div><div class="tip-text">Fushimi Inari tüm yol 4 saat sürer. Sabah 08:30'da girersen saat 10:30'a kadar rahat gezersin, sonrası çok kalabalık.</div></div>
+        <div class="tip-row"><div class="tip-icon">👟</div><div class="tip-text">Bu gün çok yürüyüş var — Inari tırmanışı dahil. Mutlaka rahat, daha önce giyilmiş ayakkabıyla git.</div></div>
+        <div class="tip-row"><div class="tip-icon">🍶</div><div class="tip-text">Sake Museum'da alkol içmeyenler için amazake (alkölsüz pirinç içeceği) seçeneği var.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>The Gate Hotel by Hulic</span></div>
+    </div>
+  </div>
+
+  <!-- G6 -->
+  <div class="day-card" id="day6">
+    <div class="day-header" onclick="toggleDay('day6')">
+      <div class="day-num kyoto-num">G6</div>
+      <div class="day-info"><div class="day-title">Arashiyama & Altın Köşk</div><div class="day-date">26 Haziran, Perşembe</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">08:45</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Arashiyama Bambu Ormanı <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Erken git — saat 10:00'dan sonra selfie çubuklu kalabalık başlar</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">09:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Tenryuji Temple <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Japon bahçe mimarisinin şaheseri, Arashiyama manzaralı gölet</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">11:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Togetsukyo Köprüsü</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">12:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Maikohan Arashiyama — Tempura</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">14:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Kinkakuji — Altın Köşk <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Bilet satın alma kuyruğu olabiliyor, online al</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">16:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Ryoanji — Zen Taş Bahçesi <span class="optional-badge">OPSİYONEL</span></div><div class="item-sub">Kinkakuji'den 10 dk, enerjiniz varsa kesinlikle gidin</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Akşam</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name rez-item">Yakiniku Hero (Gion) — Wagyu <span class="rez-badge">REZ!!</span></div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">🚌</div><div class="tip-text">Arashiyama'dan Kinkakuji'ye toplu taşıma ~30 dk. Taksi 4 kişi için fiyat/konfor açısından makul olabilir.</div></div>
+        <div class="tip-row"><div class="tip-icon">📸</div><div class="tip-text">Kinkakuji'de fotoğraf çekimi sadece dışarıdan — içerisi yok. Altın yansıma için gölet kenarında sabır gerekiyor, kalabalık olur.</div></div>
+        <div class="tip-row"><div class="tip-icon">🥩</div><div class="tip-text">Yakiniku Hero için rezervasyon al — Gion'da popüler mekan, akşam dolabiliyor.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>The Gate Hotel by Hulic</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOKYO ═══ -->
+<div class="region">
+  <div class="region-header">
+    <div class="region-dot tokyo-color"></div>
+    <div class="region-title tokyo-text">Tokyo — 6 Gece</div>
+    <div class="region-line"></div>
+  </div>
+
+  <!-- G7 -->
+  <div class="day-card" id="day7">
+    <div class="day-header" onclick="toggleDay('day7')">
+      <div class="day-num tokyo-num">G7</div>
+      <div class="day-info"><div class="day-title">Kyoto→Tokyo & Shibuya</div><div class="day-date">27 Haziran, Cuma</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">10:21</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Shinkansen — Kyoto → Tokyo</div><div class="item-sub">Valizli bilet ✓ · ~2sa 15dk · Sol tarafta otur, Fuji manzarası için!</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Öğle</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Otele Check-in & Valiz Bırakma</div><div class="item-sub">Sunroute Plus Shinjuku</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">15:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Shibuya Crossing <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Dünyanın en yoğun yaya geçidi — tam ortasına gir, etrafına bak</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">15:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Hachiko Heykeli <span class="must-badge">OLMAZ OLMAZ</span></div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">16:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Shibuya Sky <span class="must-badge">OLMAZ OLMAZ</span> <span class="rez-badge">REZ!!</span></div><div class="item-sub">Online bilet şart! Haziran'da gün batımı ~19:00 — mümkünse o saate ayarla</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">18:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Akşam Yemeği</div><div class="item-sub">Sushi no Midori / Uobei Sushi — Cuma akşamı kalabalık olabilir, erken git</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">🚄</div><div class="tip-text">Shinkansen'de sağ tarafta oturanlar Fuji'yi göremez — biletleri alırken sol taraf (A veya B koltuğu) seç.</div></div>
+        <div class="tip-row"><div class="tip-icon">🌆</div><div class="tip-text">Shibuya Sky'ı 18:00'de gir, hem gün hem gece manzarası yakala. Üst terastaki rüzgar çok kuvvetli olabiliyor, ince bir hırka al.</div></div>
+        <div class="tip-row"><div class="tip-icon">🍣</div><div class="tip-text">Sushi no Midori Cuma akşamı 1-2 saat bekleme olabilir. Uobei konveyör bant sistemiyle çok daha hızlı, 4 kişi için daha pratik.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>Sunroute Plus Shinjuku</span></div>
+    </div>
+  </div>
+
+  <!-- G8 -->
+  <div class="day-card" id="day8">
+    <div class="day-header" onclick="toggleDay('day8')">
+      <div class="day-num tokyo-num">G8</div>
+      <div class="day-info"><div class="day-title">Meiji & Harajuku & Gonpachi</div><div class="day-date">28 Haziran, Cumartesi</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">09:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Meiji Jingu <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Orman içi yürüyüş yolu, sakin ve dinlendirici bir başlangıç</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">10:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Harajuku & Omotesando Yürüyüş</div><div class="item-sub">Takeshita Sokağı → Omotesando — iki dünyanın karşıtlığı</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">13:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Maisen — Tonkatsu Öğle</div><div class="item-sub">Omotesando'da tam yolun üzerinde, bekleme olabilir</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">15:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Hie Shrine <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Akasaka'daki torii tüneli — Fushimi'den farklı ama bir o kadar etkileyici</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">17:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Age.3 — Tatlı Molası</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">19:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name rez-item">Akşam Yemeği <span class="rez-badge">REZ!!</span></div><div class="item-sub">Gonpachi Nishi-Azabu (Kill Bill restoranı!) / Afuri Ramen (yuzu)</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">👘</div><div class="tip-text">Cumartesi olduğu için Meiji Jingu kalabalık olabilir. 09:00'da olmak önemli, özellikle düğün fotoğrafı çekimlerine denk gelebilirsin.</div></div>
+        <div class="tip-row"><div class="tip-icon">🎬</div><div class="tip-text">Gonpachi'ye gitmeye karar verirsen mutlaka rezervasyon al, çok popüler. Kill Bill atmosferi için üst kat daha iyi.</div></div>
+        <div class="tip-row"><div class="tip-icon">🛍️</div><div class="tip-text">Omotesando'da Loft ve Plaza mağazaları güzel hediyelik için. Japon tasarım kırtasiye ve ev eşyaları burada çok güzel.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>Sunroute Plus Shinjuku</span></div>
+    </div>
+  </div>
+
+  <!-- G9 -->
+  <div class="day-card" id="day9">
+    <div class="day-header" onclick="toggleDay('day9')">
+      <div class="day-num tokyo-num">G9</div>
+      <div class="day-info"><div class="day-title">TeamLab & Tokyo Tower & Ginza</div><div class="day-date">29 Haziran, Pazar</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">11:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">TeamLab Planets <span class="must-badge">OLMAZ OLMAZ</span> <span class="rez-badge">REZ!!</span></div><div class="item-sub">Bilet mevcut ✓ · Kolay çıkarılan ayakkabı giy, ıslak bölümler var</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Öğle</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Ginza — Alışveriş</div><div class="item-sub">Teamlab (Toyosu) → Ginza → Tokyo Tower mantıklı güzergah</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">17:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Tokyo Tower <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Gün batımı ~19:00 — mümkünse 18:30'da çık, hem gün hem gece görünümü</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Akşam</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name rez-item">Ginza Kagari — Ramen <span class="rez-badge">REZ!!</span></div><div class="item-sub">Alternatif: Sushi Kanesaka / Tempura Kando</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">🎨</div><div class="tip-text">TeamLab'da çantaları küçük tut ya da kasaya bırak. Islak zemin bölümlerinde kayabileceğini unutma, yavaş yürü.</div></div>
+        <div class="tip-row"><div class="tip-icon">🗼</div><div class="tip-text">Tokyo Tower için online bilet almak beklemeyi kısaltır. Tokyo Skytree ile karıştırma — Tower daha küçük ama atmosfer daha romantik.</div></div>
+        <div class="tip-row"><div class="tip-icon">🍜</div><div class="tip-text">Ginza Kagari küçük bir mekan, bekleme olabilir. Erken git ya da açılışı bekle. Tori chintan suyu çok hafif ve özel.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>Sunroute Plus Shinjuku</span></div>
+    </div>
+  </div>
+
+  <!-- G10 -->
+  <div class="day-card" id="day10">
+    <div class="day-header" onclick="toggleDay('day10')">
+      <div class="day-num tokyo-num">G10</div>
+      <div class="day-info"><div class="day-title">Fuji Günübirlik 🗻</div><div class="day-date">30 Haziran, Pazartesi (Esnek)</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Sabah</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">⚠️ Hava Durumu Kontrol Et</div><div class="item-sub">Windy veya Japan Met Agency — 2-3 gün öncesinden Fuji görünürlüğü</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time"></div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name rez-item">Günübirlik Fuji Turu — Shinjuku Kalkışlı <span class="rez-badge">REZ!!</span></div><div class="item-sub">Tur önerilir — 4 kişi için en pratik seçenek</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time"></div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Lake Kawaguchi & Oishi Park</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time"></div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Fuji Ropeway</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">☁️</div><div class="tip-text">Haziran sonu yağmur mevsimine denk gelebilir. Fuji görünmezse planı esnek tut — bu günü başka bir şeyle değiştirmeye hazırlıklı ol.</div></div>
+        <div class="tip-row"><div class="tip-icon">🧥</div><div class="tip-text">5. İstasyon'a çıkılıyorsa (2300m) hava çok serin olabiliyor. Haziran'da bile ince mont veya sweatshirt al yanına.</div></div>
+        <div class="tip-row"><div class="tip-icon">🚌</div><div class="tip-text">Shinjuku'dan Viator veya Klook üzerinden günübirlik tur çok uygun fiyatlı. Kawaguchi + Oishi Park + 5. İstasyon genellikle tek turda gezilebiliyor.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>Sunroute Plus Shinjuku</span></div>
+    </div>
+  </div>
+
+  <!-- G11 -->
+  <div class="day-card" id="day11">
+    <div class="day-header" onclick="toggleDay('day11')">
+      <div class="day-num tokyo-num">G11</div>
+      <div class="day-info"><div class="day-title">Asakusa & Ueno</div><div class="day-date">1 Temmuz, Çarşamba</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">08:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name must">Sensoji <span class="must-badge">OLMAZ OLMAZ</span></div><div class="item-sub">Sabah erken — duman ve sessizlik içinde mistik bir atmosfer</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">10:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Nakamise Street</div><div class="item-sub">Hediyelik için en iyi yer — ningyoyaki, anahtar fistanı, el fanı</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">11:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Strawberry Mania — Daifuku</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">12:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Öğle Yemeği — Asakusa Tempura</div><div class="item-sub">Daikokuya en ünlüsü, bekleme olabilir. Erken kuyruğa gir</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">14:30</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Rikugien Garden</div><div class="item-sub">Sakin ve güzel, oturup dinlenmek için ideal</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">16:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Ueno Park & Ameyoko Pazarı</div><div class="item-sub">Son dakika alışveriş ve sokak yemeği fırsatı</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Akşam</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name rez-item">Omakase / Tonkatsu Yamabeji / Menya Musashi <span class="rez-badge">REZ!!</span></div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">🛕</div><div class="tip-text">Sensoji'de omikuji (fal kağıdı) çekmeyi dene — kötü fal çıkarsa kağıdı tapınak teline bağlayıp bırakıyorsun.</div></div>
+        <div class="tip-row"><div class="tip-icon">🎁</div><div class="tip-text">Nakamise Türkiye'ye götürülecek hediyeler için en uygun yer. Toplu alım yapacaksan fiyat fleksibilitesi olabilir.</div></div>
+        <div class="tip-row"><div class="tip-icon">🍱</div><div class="tip-text">Omakase seçerseniz Tableall veya Omakase.com üzerinden rezervasyon çok daha kolay. 4 kişi için yer bulmak zor olabilir, erkenden bak.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>Sunroute Plus Shinjuku</span></div>
+    </div>
+  </div>
+
+  <!-- G12 -->
+  <div class="day-card" id="day12">
+    <div class="day-header" onclick="toggleDay('day12')">
+      <div class="day-num tokyo-num">G12</div>
+      <div class="day-info"><div class="day-title">Serbest Gün — Bakım & Alışveriş</div><div class="day-date">2 Temmuz, Perşembe</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Gündüz</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name rez-item">Saç Bakımı <span class="rez-badge">REZ!!</span></div><div class="item-sub">Hot Pepper Beauty uygulamasından Shinjuku'da yabancı dostu kuaför</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time"></div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Cilt Bakımı</div><div class="item-sub">Shibuya / Shinjuku beauty clinic</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time"></div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Son Alışveriş Turu</div><div class="item-sub">Isetan · Tokyu Hands · Donki Shinjuku · Yodobashi Camera</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Akşam</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Veda Yemeği 🥂</div><div class="item-sub">Afuri Ramen / Sushi Kanesaka / Sushi no Midori — erken git, yarın uçuş var</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Gece</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Bavul Toplama & Erken Yatış 🧳</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">🧴</div><div class="tip-text">Japon skincare ürünleri için Isetan B1 ve Cosme Kitchen mükemmel. Shiseido, SK-II, Hada Labo burada çok daha ucuz.</div></div>
+        <div class="tip-row"><div class="tip-icon">✈️</div><div class="tip-text">Yarın 10:00 uçuş — Narita için en az 07:00'de havalimanında olmak lazım. Shinjuku'dan Narita Express ~80 dk, sabah 05:30-06:00'da çıkman gerekebilir.</div></div>
+        <div class="tip-row"><div class="tip-icon">🛄</div><div class="tip-text">Alışveriş çok yaptıysanız bugün bavul tartısı kontrolü yap. Fazla bagaj ücreti çok yüksek olabiliyor.</div></div>
+      </div>
+      <div class="hotel-strip">🏨 Konaklama: <span>Sunroute Plus Shinjuku</span></div>
+    </div>
+  </div>
+
+  <!-- Dönüş -->
+  <div class="day-card" id="day13">
+    <div class="day-header" onclick="toggleDay('day13')">
+      <div class="day-num tokyo-num">🛫</div>
+      <div class="day-info"><div class="day-title">Tokyo → Türkiye Dönüş</div><div class="day-date">3 Temmuz, Cuma</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">Sabah</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">Havalimanına Transfer</div><div class="item-sub">Narita/Haneda — uçuştan en az 3 saat önce havalimanında ol</div></div>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <div class="item-time">10:00</div><div class="item-check"></div>
+        <div class="item-content"><div class="item-name normal">✈️ Tokyo → Türkiye Uçuşu</div></div>
+      </div>
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">🛒</div><div class="tip-text">Narita havalimanı duty free'si çok iyi — whisky, kozmetik ve çikolata için son fırsat.</div></div>
+        <div class="tip-row"><div class="tip-icon">💴</div><div class="tip-text">Kalan Japon Yenini havalimanında dövize çevir veya kartlara yükle, Türkiye'de bozdurma oranları kötü.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleDay(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+function toggleCheck(item) {
+  item.querySelector('.item-check').classList.toggle('checked');
+  item.classList.toggle('done');
+}
+</script>
+</body>
+</html>
