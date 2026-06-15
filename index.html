@@ -243,6 +243,126 @@
   <div class="stat-card"><div class="stat-num" style="color:var(--rez)">9</div><div class="stat-label">Rezervasyon</div></div>
 </div>
 
+<!-- HAVALIMANI -->
+<div class="region">
+  <div class="region-header">
+    <div class="region-dot" style="background:#e63946"></div>
+    <div class="region-title" style="color:#e63946">Kansai Havalimanı — Varış</div>
+    <div class="region-line"></div>
+  </div>
+
+  <div class="day-card open" id="airport">
+    <div class="day-header" onclick="toggleDay('airport')">
+      <div class="day-num" style="background:rgba(230,57,70,0.1);color:#e63946">✈️</div>
+      <div class="day-info"><div class="day-title">KIX → Hotel Nikko Osaka</div><div class="day-date">21 Haziran, Pazar — 19:05 İniş</div></div>
+      <div class="day-toggle">⌄</div>
+    </div>
+    <div class="day-body">
+
+      <!-- ROTA DİYAGRAMI -->
+      <div style="padding:16px 15px 8px; background:#fafafa; border-bottom:1px solid var(--border);">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;color:var(--muted);margin-bottom:12px;text-transform:uppercase;">Güzergah</div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:50%;background:#e63946;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">✈️</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--normal);">Kansai Havalimanı (KIX)</div>
+              <div style="font-size:11px;color:var(--muted);">19:05 İniş · Terminal 1</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:stretch;gap:10px;margin:2px 0;">
+            <div style="width:32px;display:flex;justify-content:center;flex-shrink:0;">
+              <div style="width:2px;background:#e63946;opacity:0.3;flex:1;margin:0 auto;"></div>
+            </div>
+            <div style="padding:6px 0;font-size:11px;color:var(--muted);">Pasaport kontrolü + Bagaj ~40 dk</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:50%;background:#f4a261;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">🛂</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--normal);">Arrivals Katı</div>
+              <div style="font-size:11px;color:var(--muted);">ATM · SIM Kart · ICOCA · Rapi:t bileti</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:stretch;gap:10px;margin:2px 0;">
+            <div style="width:32px;display:flex;justify-content:center;flex-shrink:0;">
+              <div style="width:2px;background:#f4a261;opacity:0.3;flex:1;margin:0 auto;"></div>
+            </div>
+            <div style="padding:6px 0;font-size:11px;color:var(--muted);">🚄 Nankai Rapi:t Ekspres ~38 dk · 1.430¥/kişi</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:50%;background:#2a9d8f;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">🚉</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--normal);">Namba İstasyonu</div>
+              <div style="font-size:11px;color:var(--muted);">Nankai hattından iniş</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:stretch;gap:10px;margin:2px 0;">
+            <div style="width:32px;display:flex;justify-content:center;flex-shrink:0;">
+              <div style="width:2px;background:#2a9d8f;opacity:0.3;flex:1;margin:0 auto;"></div>
+            </div>
+            <div style="padding:6px 0;font-size:11px;color:var(--muted);">🚇 Osaka Metro Midosuji Hattı → 1 durak ~2 dk · ICOCA ile</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:50%;background:#2a9d8f;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">🚇</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--normal);">Shinsaibashi İstasyonu</div>
+              <div style="font-size:11px;color:var(--muted);">Metro'dan iniş</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:stretch;gap:10px;margin:2px 0;">
+            <div style="width:32px;display:flex;justify-content:center;flex-shrink:0;">
+              <div style="width:2px;background:#4a1fa8;opacity:0.3;flex:1;margin:0 auto;"></div>
+            </div>
+            <div style="padding:6px 0;font-size:11px;color:var(--muted);">🚶 Yürüyüş ~3 dk</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:50%;background:#4a1fa8;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">🏨</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--normal);">Hotel Nikko Osaka</div>
+              <div style="font-size:11px;color:var(--muted);">Tahmini varış ~21:30</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CHECKLİST -->
+      <div class="item" onclick="toggleCheck(this)"><div class="item-time">Türkiye'de</div><div class="item-check"></div><div class="item-content"><div class="item-name rez-item">eSIM Al & Aktif Et <span class="rez-badge">REZ!!</span></div><div class="item-sub">Klook veya Airalo üzerinden Japonya eSIM · Uçmadan önce telefona yükle</div></div></div>
+
+      <div class="item" onclick="toggleCheck(this)"><div class="item-time">Türkiye'de</div><div class="item-check"></div><div class="item-content"><div class="item-name rez-item">Klook'tan Nankai Rapi:t Bileti Al <span class="rez-badge">REZ!!</span></div><div class="item-sub">4 kişilik · KIX → Namba · Uçuştan 1 gün önce al</div></div></div>
+
+      <div class="item" onclick="toggleCheck(this)"><div class="item-time">~20:00</div><div class="item-check"></div><div class="item-content"><div class="item-name normal">Pasaport Kontrolü & Bagaj Al</div><div class="item-sub">Visit Japan Web QR kodu hazırla — kontrolü hızlandırır</div></div></div>
+
+      <div class="item" onclick="toggleCheck(this)"><div class="item-time">~20:45</div><div class="item-check"></div><div class="item-content"><div class="item-name normal">ATM'den Para Çek</div><div class="item-sub">7-Eleven ATM en güvenilir · İlk günler için 4 kişiye ~40.000¥ yeterli</div></div></div>
+
+      <div class="item" onclick="toggleCheck(this)"><div class="item-time">~20:50</div><div class="item-check"></div><div class="item-content"><div class="item-name normal">ICOCA Kart Al — 4 Adet</div><div class="item-sub">Arrivals katı otomatlardan · 2.000¥ yükle (500¥ depozito dahil) · Tüm tatil boyunca kullanılır</div></div></div>
+
+      <div class="item" onclick="toggleCheck(this)"><div class="item-time">~21:00</div><div class="item-check"></div><div class="item-content"><div class="item-name normal">Nankai Rapi:t — KIX → Namba</div><div class="item-sub">Klook bileti göster · ~38 dk · Valizler üst rafa veya ayak dibine</div></div></div>
+
+      <div class="item" onclick="toggleCheck(this)"><div class="item-time">~21:40</div><div class="item-check"></div><div class="item-content"><div class="item-name normal">Osaka Metro — Namba → Shinsaibashi</div><div class="item-sub">Midosuji Hattı · 1 durak · ICOCA kart ile geç · 2 dk</div></div></div>
+
+      <div class="item" onclick="toggleCheck(this)"><div class="item-time">~21:45</div><div class="item-check"></div><div class="item-content"><div class="item-name normal">Hotel Nikko Osaka — Check-in 🏨</div><div class="item-sub">Shinsaibashi istasyonundan ~3 dk yürüyüş</div></div></div>
+
+      <div class="tips-section">
+        <div class="tips-label">💡 Öneri & Uyarı</div>
+        <div class="tip-row"><div class="tip-icon">📱</div><div class="tip-text">SIM kart veya Pocket WiFi'yi Türkiye'den Klook üzerinden al, havalimanında teslim al. Arrivals çıkışında teslim noktası var.</div></div>
+        <div class="tip-row"><div class="tip-icon">🎫</div><div class="tip-text">Rapi:t bileti Klook'tan alındıysa QR kod yeterli, gişeye gerek yok. Doğrudan platforma in.</div></div>
+        <div class="tip-row"><div class="tip-icon">🧳</div><div class="tip-text">Rapi:t'te valiz için özel bagaj rafları var, 4 büyük valiz sorunsuz sığar.</div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- OSAKA -->
 <div class="region">
   <div class="region-header">
